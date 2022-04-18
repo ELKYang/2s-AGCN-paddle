@@ -398,12 +398,14 @@ class Processor():
                     predict_label = paddle.argmax(output, 1)
                     step += 1
 
+                if arg.test_feeder_args['debug']:
+                    predict = list(paddle.to_tensor(predict_label, place=paddle.CPUPlace()).numpy())
+                    true = list(paddle.to_tensor(label.data, place=paddle.CPUPlace()).numpy())
+                    print('predict action index: ', predict, '\n', 'true action index: ', true)
                 if wrong_file is not None or result_file is not None:
                     predict = list(predict_label.numpy())
                     true = list(label.numpy())
                     for i, x in enumerate(predict):
-                        if arg.test_feeder_args['debug']:
-                            print('predict action index: ', str(index[i]), '\n', 'true action index: ',str(true[i]))
                         if result_file is not None:
                             f_r.write(str(x) + ',' + str(true[i]) + '\n')
                         if x != true[i] and wrong_file is not None:
