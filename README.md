@@ -36,7 +36,7 @@ This is the unofficial code based on **PaddlePaddle** of CVPR 2019 paper:
 -data\  
   -nturgbd_raw\  
     -nturgb+d_skeletons\
- 	  ...
- 	-samples_with_missing_skeletons.txt
+ 	...
+  -samples_with_missing_skeletons.txt
 ```
 
