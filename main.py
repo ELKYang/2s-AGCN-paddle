@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 from __future__ import print_function
 
+import warnings
+warnings.filterwarnings("ignore")
+
 import argparse
 import inspect
 import os
@@ -306,12 +309,12 @@ class Processor():
         self.train_writer.add_scalar('epoch', epoch, int(self.global_step))
         self.record_time()
         timer = dict(dataloader=0.001, model=0.001, statistics=0.001)
-        process = tqdm(loader)
+        process = tqdm(loader, ncols=100)
         for batch_idx, (data, label, index) in enumerate(process):
             self.global_step += 1
             # get data
-            data = paddle.to_tensor(data.float(), place=self.output_device, stop_gradient=True)
-            label = paddle.to_tensor(label.long(), place=self.output_device, stop_gradient=True)
+            data = paddle.to_tensor(data)
+            label = paddle.to_tensor(label)
             timer['dataloader'] += self.split_time()
 
             # forward
@@ -330,14 +333,14 @@ class Processor():
             loss.backward()
             self.optimizer.step()
             self.optimizer.clear_grad()
-            loss_value.append(loss.data.item())
+            loss_value.append(loss.numpy())
             timer['model'] += self.split_time()
 
-            predict_label = paddle.argmax(output.data, 1)
+            predict_label = paddle.argmax(output, 1)
 
-            acc = paddle.mean((predict_label == label.data))
-            self.train_writer.add_scalar('acc', acc.data.item(), int(self.global_step))
-            self.train_writer.add_scalar('loss', loss.data.item(), int(self.global_step))
+            acc = paddle.mean((predict_label == label))
+            self.train_writer.add_scalar('acc', acc, int(self.global_step))
+            self.train_writer.add_scalar('loss', loss.numpy().item(), int(self.global_step))
             self.train_writer.add_scalar('loss_l1', l1, int(self.global_step))
             # self.train_writer.add_scalar('batch_time', process.iterable.last_duration, self.global_step)
 
@@ -376,11 +379,11 @@ class Processor():
             total_num = 0
             loss_total = 0
             step = 0
-            process = tqdm(self.data_loader[ln])
+            process = tqdm(self.data_loader[ln], ncols=100)
             for batch_idx, (data, label, index) in enumerate(process):
                 with paddle.no_grad():
-                    data = paddle.to_tensor(data.float(), place=self.output_device)
-                    label = paddle.to_tensor(label.long(), place=self.output_device)
+                    data = paddle.to_tensor(data)
+                    label = paddle.to_tensor(label)
 
                     output = self.model(data)
                     if isinstance(output, tuple):
@@ -389,18 +392,18 @@ class Processor():
                     else:
                         l1 = 0
                     loss = self.loss(output, label)
-                    score_frag.append(paddle.to_tensor(output.data, place=paddle.CPUPlace()).numpy())
-                    loss_value.append(loss.data.item())
+                    score_frag.append(output.numpy())
+                    loss_value.append(loss.numpy())
 
-                    predict_label = paddle.argmax(output.data, 1)
+                    predict_label = paddle.argmax(output, 1)
                     step += 1
 
                 if wrong_file is not None or result_file is not None:
-                    predict = list(paddle.to_tensor(predict_label, place=paddle.CPUPlace()).numpy())
-                    true = list(paddle.to_tensor(label.data, place=paddle.CPUPlace()).numpy())
+                    predict = list(predict_label.numpy())
+                    true = list(label.numpy())
                     for i, x in enumerate(predict):
-                        if arg.train_feeder_args['debug']:
-                            print('predict action index: ', str(index[i]), '\n', 'ture action index: ',str(true[i]))
+                        if arg.test_feeder_args['debug']:
+                            print('predict action index: ', str(index[i]), '\n', 'true action index: ',str(true[i]))
                         if result_file is not None:
                             f_r.write(str(x) + ',' + str(true[i]) + '\n')
                         if x != true[i] and wrong_file is not None:
