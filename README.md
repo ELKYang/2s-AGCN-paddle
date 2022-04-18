@@ -30,7 +30,7 @@ This is the unofficial code based on **PaddlePaddle** of CVPR 2019 paper:
 
 VisualDL可视化日志：VDL
 
-模型权重：Model_weight
+模型权重：model_weights
 
 ## 3 数据集及数据预处理
 
@@ -41,7 +41,7 @@ VisualDL可视化日志：VDL
      -nturgbd_raw\  
        -nturgb+d_skeletons\
     	  ...
-    	-samples_with_missing_skeletons.txt
+       -samples_with_missing_skeletons.txt
    ```
 
 2. 生成jiont数据
@@ -101,13 +101,13 @@ VisualDL可视化日志：VDL
    - `x-sub joint`测试
 
      ```
-     python main.py --config config/nturgbd-cross-subject/test_joint.yaml
+     python main.py --config config/nturgbd-cross-subject/test_joint.yaml --weights 'path to weghts'
      ```
 
    - `x-sub bone`测试
 
      ```
-     python main.py --config config/nturgbd-cross-subject/test_bone.yaml
+     python main.py --config config/nturgbd-cross-subject/test_bone.yaml --weights 'path to weights'
      ```
 
 4. **双流融合生成结果**
