@@ -14,17 +14,17 @@ def get_args(add_help=True):
     parser.add_argument(
         '--data-path',
         type=str,
-        default='../data/ntu/xsub/val_data_joint.npy',
+        default='../data/ntu/xview/val_data_joint.npy',
         help='Data path of val_data')
     parser.add_argument(
         '--label-path',
         type=str,
-        default='../data/ntu/xsub/val_label.pkl',
+        default='../data/ntu/xview/val_label.pkl',
         help='Data path of val_label')
     parser.add_argument(
         '--save-dir',
         type=str,
-        default='../data/ntu/xsub',
+        default='../data/ntu/xview',
         help='save path of result data')
     parser.add_argument(
         '--data-num',

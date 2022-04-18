@@ -18,11 +18,11 @@ This is the unofficial code based on **PaddlePaddle** of CVPR 2019 paper:
 
 > 在NTU-RGBD数据集上的测试效果如下
 
-|                |    CS     |  CV  |
-| :------------: | :-------: | :--: |
-| Js-AGCN(joint) |   85.8%   |      |
-| Bs-AGCN(bone)  |   86.7%   |      |
-|    2s-AGCN     | **88.5%** |      |
+|                |    CS     |   CV   |
+| :------------: | :-------: | :----: |
+| Js-AGCN(joint) |   85.8%   | 94.13% |
+| Bs-AGCN(bone)  |   86.7%   |        |
+|    2s-AGCN     | **88.5%** |        |
 
 在NTU-RGBD上达到验收标准：X-Sub=88.5%, X-View=95.1%
 
@@ -30,7 +30,7 @@ This is the unofficial code based on **PaddlePaddle** of CVPR 2019 paper:
 
 VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/main/runs)
 
-模型权重：model_weights
+模型权重：[model_weights](https://github.com/ELKYang/2s-AGCN-paddle/tree/main/weights)
 
 ## 3 数据集及数据预处理
 
@@ -44,7 +44,7 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
     	-samples_with_missing_skeletons.txt
    ```
 
-2. 生成jiont数据
+2. 生成joint数据
 
    ```
    python data_gen/ntu_gendata.py
@@ -78,18 +78,18 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
 
 2. **模型训练**
 
-   模型训练参数的配置文件均在`config`文件夹中(下面以**x-sub**为例进行训练测试以及tipc)
+   模型训练参数的配置文件均在`config`文件夹中(下面以**x-view**为例进行训练测试以及tipc)
 
-   - `x-sub joint`训练
-
-     ```
-     python main.py --config config/nturgbd-cross-subject/train_joint.yaml
-     ```
-
-   - `x-sub bone`训练
+   - `x-view joint`训练
 
      ```
-     python main.py --config config/nturgbd-cross-subject/train_bone.yaml
+     python main.py --config config/nturgbd-cross-view/train_joint.yaml
+     ```
+
+   - `x-view bone`训练
+
+     ```
+     python main.py --config config/nturgbd-cross-view/train_bone.yaml
      ```
 
    训练完成后模型的VisualDL日志保存在`runs`文件夹
@@ -98,36 +98,43 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
 
 3. **模型测试**
 
-   - `x-sub joint`测试
+   - `x-view joint`测试
 
      ```
-     python main.py --config config/nturgbd-cross-subject/test_joint.yaml --weights 'path to weghts'
+     python main.py --config config/nturgbd-cross-view/test_joint.yaml --weights 'path to weghts'
      ```
 
-   - `x-sub bone`测试
+   - `x-view bone`测试
 
      ```
-     python main.py --config config/nturgbd-cross-subject/test_bone.yaml --weights 'path to weights'
+     python main.py --config config/nturgbd-cross-view/test_bone.yaml --weights 'path to weights'
      ```
 
-4. **推理预测**
+4. **模型预测**
 
-   这里使用x-sub测试集中的10条数据用来做推理预测
+   这里使用x-view测试集中的10条数据用来做预测
 
    ```
-   python main.py --config config/nturgbd-cross-subject/test_joint_lite.yaml --weights 'path to weights'
+   python main.py --config config/nturgbd-cross-view/test_joint_lite.yaml --weights 'path to weights'
    ```
 
-   预测结果如下(详细的预测信息生成在`work_dir/ntu/xsub/agcn_test_joint_lite`文件夹下)：
+   预测结果如下(详细的预测信息生成在`work_dir/ntu/xview/agcn_test_joint_lite`文件夹下)：
 
    ```
-   
+   predict action index:  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] 
+   true action index:  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+   100%|█████████████████████████████████████████████| 1/1 [00:02<00:00,  2.21s/it]
+   Accuracy:  1.0  model:  ./runs/ntu_cv_agcn_test_joint_lite
+   [ Mon Apr 18 23:40:28 2022 ] 	Mean test loss of 1 batches: 0.004666340071707964.
+   [ Mon Apr 18 23:40:28 2022 ] 	Top1: 100.00%
+   [ Mon Apr 18 23:40:28 2022 ] 	Top5: 100.00%
+   [ Mon Apr 18 23:40:28 2022 ] Done.
    ```
 
 5. **双流融合生成结果**
 
    ```
-   python ensemble.py --datasets ntu/xsub
+   python ensemble.py --datasets ntu/view
    ```
 
 ## 6 TIPC
