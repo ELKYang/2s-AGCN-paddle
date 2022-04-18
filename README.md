@@ -18,25 +18,110 @@ This is the unofficial code based on **PaddlePaddle** of CVPR 2019 paper:
 
 > 在NTU-RGBD数据集上的测试效果如下
 
-|         |  CS   |  CV  |
-| :-----: | :---: | :--: |
-| Js-AGCN | 85.8% |      |
-| Bs-AGCN | 86.7% |      |
-| 2s-AGCN | 88.5% |      |
+|                |  CS   |  CV  |
+| :------------: | :---: | :--: |
+| Js-AGCN(joint) | 85.8% |      |
+| Bs-AGCN(bone)  | 86.7% |      |
+|    2s-AGCN     | 88.5% |      |
 
 在NTU-RGBD上达到验收标准：X-Sub=88.5%, X-View=95.1%
 
-训练日志：日志			VisualDL可视化日志：VDL			模型权重：Model_weight
+训练日志：日志
+
+VisualDL可视化日志：VDL
+
+模型权重：Model_weight
 
 ## 3 数据集及数据预处理
 
-数据集地址：[NTU-RGBD](https://github.com/shahroudy/NTURGB-D)，下载后将其放到如下目录
+1. 数据集地址：[NTU-RGBD](https://github.com/shahroudy/NTURGB-D)，下载后将其放到如下目录
 
-```
--data\  
-  -nturgbd_raw\  
-    -nturgb+d_skeletons\
- 	...
-    -samples_with_missing_skeletons.txt
-```
+   ```
+   -data\  
+     -nturgbd_raw\  
+       -nturgb+d_skeletons\
+    	  ...
+    	-samples_with_missing_skeletons.txt
+   ```
 
+2. 生成jiont数据
+
+   ```
+   python data_gen/ntu_gendata.py
+   ```
+
+3. 生成bone数据
+
+   ```
+   python data_gen/gen_bone_data.py
+   ```
+
+## 4 环境依赖
+
+- 硬件：Tesla V100 32G
+
+- PaddlePaddle==2.2.2
+
+- ```
+  pip install -r requirements.txt
+  ```
+
+## 5 快速开始
+
+1. **Clone本项目**
+
+   ```
+   # clone this repo
+   git clone https://github.com/ELKYang/2s-AGCN-paddle.git
+   cd 2s-AGCN-paddle
+   ```
+
+2. **模型训练**
+
+   模型训练参数的配置文件均在`config`文件夹中(下面以**x-sub**为例进行训练测试以及tipc)
+
+   - `x-sub joint`训练
+
+     ```
+     python main.py --config config/nturgbd-cross-subject/train_joint.yaml
+     ```
+
+   - `x-sub bone`训练
+
+     ```
+     python main.py --config config/nturgbd-cross-subject/train_bone.yaml
+     ```
+
+   训练完成后模型的VisualDL日志保存在`runs`文件夹
+
+   模型参数，训练日志，训练配置等保存在`work_dir`文件夹
+
+3. **模型测试**
+
+   - `x-sub joint`测试
+
+     ```
+     python main.py --config config/nturgbd-cross-subject/test_joint.yaml
+     ```
+
+   - `x-sub bone`测试
+
+     ```
+     python main.py --config config/nturgbd-cross-subject/test_bone.yaml
+     ```
+
+4. **双流融合生成结果**
+
+   ```
+   python ensemble.py --datasets ntu/xsub
+   ```
+
+5. **TIPC**
+
+   
+
+## 6 附录
+
+代码参考：https://github.com/lshiwjx/2s-AGCN
+
+感谢百度飞浆团队提供的算力支持！
