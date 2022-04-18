@@ -13,12 +13,20 @@ def parse_args():
         help='The directory for saving the exported model',
         type=str,
         default='./output')
+
     parser.add_argument(
         '--model_path',
         dest='model_path',
         help='The path of model for export',
         type=str,
         default=None)
+
+    parser.add_argument(
+        '--batch',
+        dest='batch for infer',
+        help='The infer batch',
+        type=int,
+        default=10)
 
     return parser.parse_args()
 
@@ -31,7 +39,7 @@ def main(args):
     if args.model_path is not None:
         model.load_dict(paddle.load(args.model_path))
         print('Loaded trained params of model successfully.')
-    shape = [1, 3, 300, 25, 2]
+    shape = [args.batch, 3, 300, 25, 2]
     new_net = model
     new_net.eval()
     new_net = paddle.jit.to_static(
