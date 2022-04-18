@@ -26,9 +26,9 @@ This is the unofficial code based on **PaddlePaddle** of CVPR 2019 paper:
 
 在NTU-RGBD上达到验收标准：X-Sub=88.5%, X-View=95.1%
 
-训练日志：日志
+训练日志：[日志](https://github.com/ELKYang/2s-AGCN-paddle/tree/main/work_dir/ntu)
 
-VisualDL可视化日志：VDL
+VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/main/runs)
 
 模型权重：model_weights
 
