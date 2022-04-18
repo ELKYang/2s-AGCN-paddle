@@ -18,11 +18,11 @@ This is the unofficial code based on **PaddlePaddle** of CVPR 2019 paper:
 
 > 在NTU-RGBD数据集上的测试效果如下
 
-|                |  CS   |  CV  |
-| :------------: | :---: | :--: |
-| Js-AGCN(joint) | 85.8% |      |
-| Bs-AGCN(bone)  | 86.7% |      |
-|    2s-AGCN     | 88.5% |      |
+|                |    CS     |  CV  |
+| :------------: | :-------: | :--: |
+| Js-AGCN(joint) |   85.8%   |      |
+| Bs-AGCN(bone)  |   86.7%   |      |
+|    2s-AGCN     | **88.5%** |      |
 
 在NTU-RGBD上达到验收标准：X-Sub=88.5%, X-View=95.1%
 
@@ -41,7 +41,7 @@ VisualDL可视化日志：VDL
      -nturgbd_raw\  
        -nturgb+d_skeletons\
     	  ...
-       -samples_with_missing_skeletons.txt
+    	-samples_with_missing_skeletons.txt
    ```
 
 2. 生成jiont数据
@@ -110,17 +110,31 @@ VisualDL可视化日志：VDL
      python main.py --config config/nturgbd-cross-subject/test_bone.yaml --weights 'path to weights'
      ```
 
-4. **双流融合生成结果**
+4. **推理预测**
+
+   这里使用x-sub测试集中的10条数据用来做推理预测
+
+   ```
+   python main.py --config config/nturgbd-cross-subject/test_joint_lite.yaml --weights 'path to weights'
+   ```
+
+   预测结果如下(详细的预测信息生成在`work_dir/ntu/xsub/agcn_test_joint_lite`文件夹下)：
+
+   ```
+   
+   ```
+
+5. **双流融合生成结果**
 
    ```
    python ensemble.py --datasets ntu/xsub
    ```
 
-5. **TIPC**
+## 6 TIPC
 
-   
 
-## 6 附录
+
+## 7 附录
 
 代码参考：https://github.com/lshiwjx/2s-AGCN
 
