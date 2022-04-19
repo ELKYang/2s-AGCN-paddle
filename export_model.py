@@ -31,6 +31,8 @@ def parse_args():
         type=int,
         default=10)
 
+    parser.add_argument('--pretrained', default=".")  #
+    parser.add_argument('--save-inference-dir', default=".")  #
     return parser.parse_args()
 
 
