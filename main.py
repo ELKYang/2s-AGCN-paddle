@@ -416,7 +416,7 @@ class Processor():
             if accuracy > self.best_acc:
                 self.best_acc = accuracy
                 state_dict = self.model.state_dict()
-                paddle.save(state_dict, path='./runs/best_model.pdparams')
+                paddle.save(state_dict, path='./weights/best_model.pdparams')
 
             # self.lr_scheduler.step(loss)
             print('Accuracy: ', accuracy, ' model: ', self.arg.model_saved_name)
