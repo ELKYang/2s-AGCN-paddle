@@ -126,6 +126,10 @@ def main():
 
     # get data
     data, sample_name, label = parse_file_paths(data_path=args.data_file, label_path=args.label_file)
+    data = data[-100:]
+    sample_name = sample_name[-100:]
+    label = label[-100:]
+    # ps:这里没对大小做检查，希望它大于100
 
     if args.benchmark:
         num_warmup = 0
