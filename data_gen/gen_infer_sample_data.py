@@ -13,16 +13,6 @@ def get_args(add_help=True):
         description="gen sample data", add_help=add_help)
 
     parser.add_argument(
-        '--data-path',
-        type=str,
-        default='./data/ntu/xview/val_data_joint.npy',
-        help='Data path of val_data')
-    parser.add_argument(
-        '--label-path',
-        type=str,
-        default='./data/ntu/xview/val_label.pkl',
-        help='Data path of val_label')
-    parser.add_argument(
         '--save-dir',
         type=str,
         default='./data/ntu/tiny_dataset',
@@ -32,6 +22,18 @@ def get_args(add_help=True):
         type=int,
         default=50,
         help='data num of result data')
+    
+    parser.add_argument(
+        '--dataset',
+        type=str,
+        default="xview",
+        help='xview or xsub')
+
+    parser.add_argument(
+        '--mode',
+        type=str,
+        default="joint",
+        help='joint or bone')
 
     args = parser.parse_args()
     return args
@@ -65,7 +67,9 @@ def gen_tiny_data(data_path, label_path, save_dir, data_num, use_mmap=True):
 
 if __name__ == "__main__":
     args = get_args()
-    gen_tiny_data(data_path=args.data_path, label_path=args.label_path,save_dir=args.save_dir, data_num=args.data_num)
+    data_path = f'./data/ntu/{args.dataset}/val_data_{args.mode}.npy'
+    label_path = f'./data/ntu/{args.dataset}/val_label.pkl'
+    gen_tiny_data(data_path, label_path,save_dir=args.save_dir, data_num=args.data_num)
 
     """
     try:
