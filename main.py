@@ -156,6 +156,7 @@ def get_parser():
     parser.add_argument('--only_train_part', default=False)
     parser.add_argument('--only_train_epoch', default=0)
     parser.add_argument('--warm_up_epoch', default=0)
+    parser.add_argument('--lite', default=True)
     return parser
 
 
@@ -506,5 +507,7 @@ if __name__ == '__main__':
 
     arg = parser.parse_args()
     init_seed(0)
+    
+    arg.train_feeder_args['debug'] = arg.lite
     processor = Processor(arg)
     processor.start()
