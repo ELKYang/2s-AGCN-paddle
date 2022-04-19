@@ -39,10 +39,10 @@ function fun_train(){
     _python=$1
     _main=$2
     _config=$3
-    _mode=$4
+    _lite=$4
 
-    command="${_python} ${_main} --config ${_config}"
-    echo $command
+    command="${_python} ${_main} --config ${_config} --lite=${_lite}"
+    eval $command
 }
 
 
@@ -54,7 +54,7 @@ function fun_test(){
     _mode=$5
 
     command="${_python} ${_main} --config ${_config} --weights ${_weights}"
-    echo $command
+    eval $command
 }
 
 function fun_prepare_data(){
@@ -65,7 +65,7 @@ function fun_prepare_data(){
     _data_num=$5
 
     command="${_python} ${_prepare_data} --dataset=${_dataset} --mode=${_mode} --data-num=${_data_num}"
-    echo $command
+    eval $command
 }
 
 
@@ -76,7 +76,7 @@ function fun_export(){
     _bs=$4
 
     command="${_python} ${_tool} --model_path=${_model_path} --batch=${_bs}"
-    echo $command
+    eval $command
 }
 
 function fun_infer(){
@@ -84,12 +84,19 @@ function fun_infer(){
     _tool=$2
 
     command="${_python} ${_tool}"
-    echo $command
+    eval $command
 }
 
 if [ ${MODE} = "whole_train_lite_infer" ];then
-    # fun_train "${python}" "${main}" "${config_train}"
+    fun_train "${python}" "${main}" "${config_train}" "False"
     fun_export "${python}" "${export_tool}" "${model_path}" "${export_batch_size}"
     fun_prepare_data "${python}" "${prepare_data}" "${dataset}" "${stream}" "${data_num}"
     fun_infer "${python}" "${infer_tool}"
+
+elif [ ${MODE} = "lite_train_lite_infer" ];then
+    fun_train "${python}" "${main}" "${config_train}" "True"
+    fun_export "${python}" "${export_tool}" "${model_path}" "${export_batch_size}"
+    fun_prepare_data "${python}" "${prepare_data}" "${dataset}" "${stream}" "${data_num}"
+    fun_infer "${python}" "${infer_tool}"
+
 fi
