@@ -4,6 +4,9 @@ import paddle
 
 from paddle_model.agcn import Model
 
+import warnings
+warnings.filterwarnings("ignore")
+
 def parse_args():
     parser = argparse.ArgumentParser(description='Model export.')
     parser.add_argument("--graph", type=str, default='graph.ntu_rgb_d.Graph')
@@ -23,7 +26,7 @@ def parse_args():
 
     parser.add_argument(
         '--batch',
-        dest='batch for infer',
+        dest='batch',
         help='The infer batch',
         type=int,
         default=10)
