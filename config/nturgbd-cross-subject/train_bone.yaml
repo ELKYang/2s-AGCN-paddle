@@ -15,6 +15,7 @@ train_feeder_args:
 test_feeder_args:
   data_path: ./data/ntu/xsub/val_data_bone.npy
   label_path: ./data/ntu/xsub/val_label.pkl
+  debug: False
 
 # model
 model: paddle_model.agcn.Model

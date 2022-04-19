@@ -60,9 +60,17 @@ def gen_tiny_data(data_path, label_path, save_dir, data_num, use_mmap=True):
 
 
 if __name__ == "__main__":
-    args = get_args()
-    gen_tiny_data(data_path=args.data_path, label_path=args.label_path,
-                  save_dir=args.save_dir, data_num=args.data_num)
+    # args = get_args()
+    # gen_tiny_data(data_path=args.data_path, label_path=args.label_path,
+    #               save_dir=args.save_dir, data_num=args.data_num)
+    try:
+        with open('../data/ntu/tiny_dataset/tiny_infer_label.pkl') as f:
+            sample_name, label = pickle.load(f)
+    except:
+        # for pickle file from python2
+        with open('../data/ntu/tiny_dataset/tiny_infer_label.pkl', 'rb') as f:
+            sample_name, label = pickle.load(f, encoding='latin1')
+    print(label[0])
 
 
 
