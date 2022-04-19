@@ -1,4 +1,5 @@
 import os.path
+import os
 import argparse
 import numpy as np
 import pickle
@@ -14,17 +15,17 @@ def get_args(add_help=True):
     parser.add_argument(
         '--data-path',
         type=str,
-        default='../data/ntu/xview/val_data_joint.npy',
+        default='./data/ntu/xview/val_data_joint.npy',
         help='Data path of val_data')
     parser.add_argument(
         '--label-path',
         type=str,
-        default='../data/ntu/xview/val_label.pkl',
+        default='./data/ntu/xview/val_label.pkl',
         help='Data path of val_label')
     parser.add_argument(
         '--save-dir',
         type=str,
-        default='../data/ntu/tiny_dataset',
+        default='./data/ntu/tiny_dataset',
         help='save path of result data')
     parser.add_argument(
         '--data-num',
@@ -37,6 +38,9 @@ def get_args(add_help=True):
 
 
 def gen_tiny_data(data_path, label_path, save_dir, data_num, use_mmap=True):
+    if not os.path.exists(save_dir):
+        os.mkdir(save_dir)
+
     if use_mmap:
         data = np.load(data_path, mmap_mode='r')
     else:
@@ -60,9 +64,10 @@ def gen_tiny_data(data_path, label_path, save_dir, data_num, use_mmap=True):
 
 
 if __name__ == "__main__":
-    # args = get_args()
-    # gen_tiny_data(data_path=args.data_path, label_path=args.label_path,
-    #               save_dir=args.save_dir, data_num=args.data_num)
+    args = get_args()
+    gen_tiny_data(data_path=args.data_path, label_path=args.label_path,save_dir=args.save_dir, data_num=args.data_num)
+
+    """
     try:
         with open('../data/ntu/tiny_dataset/tiny_infer_label.pkl') as f:
             sample_name, label = pickle.load(f)
@@ -71,6 +76,6 @@ if __name__ == "__main__":
         with open('../data/ntu/tiny_dataset/tiny_infer_label.pkl', 'rb') as f:
             sample_name, label = pickle.load(f, encoding='latin1')
     print(label[0])
-
+    """
 
 
