@@ -41,4 +41,9 @@ bash test_tipc/test_train_inference_python.sh ./test_tipc/configs/2s-AGCN/train_
 
 ## 3.TIPC测试成功图片
 
-如下所示
+训练&导出静态&创建小数据集：
+![训练&导出静态&创建小数据集](https://github.com/ELKYang/2s-AGCN-paddle/blob/main/test_tipc/imgs/1.png)
+
+推理：
+![训练&导出静态&创建小数据集](https://github.com/ELKYang/2s-AGCN-paddle/blob/main/test_tipc/imgs/2.png)
+![训练&导出静态&创建小数据集](https://github.com/ELKYang/2s-AGCN-paddle/blob/main/test_tipc/imgs/3.png)
