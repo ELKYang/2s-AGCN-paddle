@@ -46,7 +46,7 @@ def parse_args():
     parser.add_argument("--ir_optim", type=str2bool, default=True)
     parser.add_argument("--use_tensorrt", type=str2bool, default=False)
     parser.add_argument("--gpu_mem", type=int, default=8000)
-    parser.add_argument("--enable_benchmark", type=str2bool, default=False)
+    parser.add_argument("--enable_benchmark", type=str2bool, default=True)
     parser.add_argument("--enable_mkldnn", type=str2bool, default=False)
     parser.add_argument("--cpu_threads", type=int, default=None)
 
