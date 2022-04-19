@@ -398,9 +398,9 @@ class Processor():
                     predict_label = paddle.argmax(output, 1)
                     step += 1
 
-                if arg.test_feeder_args['debug']:
-                    predict = list(paddle.to_tensor(predict_label, place=paddle.CPUPlace()).numpy())
-                    true = list(paddle.to_tensor(label.data, place=paddle.CPUPlace()).numpy())
+                if arg.train_feeder_args['debug']:
+                    predict = list(predict_label.numpy())
+                    true = list(label.numpy())
                     print('predict action index: ', predict, '\n', 'true action index: ', true)
                 if wrong_file is not None or result_file is not None:
                     predict = list(predict_label.numpy())
@@ -415,6 +415,9 @@ class Processor():
             accuracy = self.data_loader[ln].dataset.top_k(score, 1)
             if accuracy > self.best_acc:
                 self.best_acc = accuracy
+                state_dict = self.model.state_dict()
+                paddle.save(state_dict, path='./runs/best_model.pdparams')
+
             # self.lr_scheduler.step(loss)
             print('Accuracy: ', accuracy, ' model: ', self.arg.model_saved_name)
             if self.arg.phase == 'train':
