@@ -27,6 +27,9 @@ test_tipc/
 
 测试单项功能仅需两行命令，**如需测试不同模型/功能，替换配置文件即可**，命令格式如下：
 ```shell
+# 功能：准备数据
+# 格式：bash + 运行脚本 + 参数1: 配置文件选择 + 参数2: 模式选择
+bash test_tipc/prepare.sh  configs/[model_name]/[params_file_name]  [Mode]
 # 功能：运行测试
 # 格式：bash + 运行脚本 + 参数1: 配置文件选择 + 参数2: 模式选择
 bash test_tipc/test_train_inference_python.sh configs/[model_name]/[params_file_name]  [Mode]
@@ -34,11 +37,13 @@ bash test_tipc/test_train_inference_python.sh configs/[model_name]/[params_file_
 
 以下为示例：
 ```shell
+# 功能：准备数据
+# 格式：bash + 运行脚本 + 参数1: 配置文件选择 + 参数2: 模式选择
+bash test_tipc/prepare.sh ./test_tipc/configs/2s-AGCN/train_infer_python.txt 'lite_train_lite_infer'
 # 功能：运行测试
 # 格式：bash + 运行脚本 + 参数1: 配置文件选择 + 参数2: 模式选择
 bash test_tipc/test_train_inference_python.sh ./test_tipc/configs/2s-AGCN/train_infer_python.txt 'lite_train_lite_infer'
 ```
-
 ## 3.TIPC测试成功图片
 
 训练&导出静态&创建小数据集：
