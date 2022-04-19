@@ -22,6 +22,9 @@ import auto_log
 from paddle import inference
 from paddle.inference import Config, create_predictor
 
+import warnings
+warnings.filterwarnings("ignore")
+
 
 def parse_args():
     def str2bool(v):
