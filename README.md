@@ -184,7 +184,7 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
      模型推理时使用小数据集进行模型推理
    
      ```
-     pyhton ./data_gen/gen_infer_sample_data.py --data_path '../data/ntu/xview/val_data_joint.npy' --label_path '../data/ntu/xview/val_label.pkl' --data_num 50
+     pyhton ./data_gen/gen_infer_sample_data.py --dataset 'xsub' --mode 'joint' --data_num 50
      ```
    
    - 模型静态推理
