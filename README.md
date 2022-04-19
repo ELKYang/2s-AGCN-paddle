@@ -202,7 +202,7 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
      进行模型的静态推理
    
      ```
-     pyhton infer.py --data_file 'path to tiny data set' --label_path 'path to tiny label set' --model_file ./output/model.pdmodel --params_file ./output/model.pdiparams
+     pyhton infer.py --data_file 'path to tiny data set' --label_file 'path to tiny label set' --model_file ./output/model.pdmodel --params_file ./output/model.pdiparams
      ```
    
      静态推理部分主要输出：
