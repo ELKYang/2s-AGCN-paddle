@@ -108,7 +108,6 @@ def parse_file_paths(data_path, label_path, use_mmap=True):
         data = np.load(data_path, mmap_mode='r')
     else:
         data = np.load(data_path)
-    print(data.shape)
     return data, sample_name, label
 
 
