@@ -267,8 +267,8 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
    |-- paddle_model                 # paddle模型定义
       |-- __init__.py
       |-- agcn.py                   # AGCN模型
-   |-- runs                         # 模型训练日志文件夹
-   |-- work_dir						# 模型训练日志文件夹
+   |-- runs                         # VisualDL日志文件夹
+   |-- work_dir						   # 模型训练日志文件夹
    |-- weights                      # 权重文件夹
    |-- README.md
    |-- ensemble.py                  # 双流集成代码
