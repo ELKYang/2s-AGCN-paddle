@@ -19,5 +19,5 @@ trainer_list=$(func_parser_value "${lines[14]}")
 # MODE be one of ['lite_train_lite_infer']
 if [ ${MODE} = "lite_train_lite_infer" ];then
     rm -f ./data/ntu/tiny_dataset/*
-    pyhton ./data_gen/gen_infer_sample_data.py  --data_num 500 --data_set xview --mode joint
+    python ./data_gen/gen_infer_sample_data.py  --data_num 500 --data_set xview --mode joint
 fi
