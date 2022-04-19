@@ -282,6 +282,14 @@ bash test_tipc/test_train_inference_python.sh test_tipc/configs/2s-AGCN/train_in
    |-- requirements.txt             # 环境配置文件
 ```
 ## 8 附录
+**相关信息**
+| 信息     | 描述                                                         |
+| -------- | ------------------------------------------------------------ |
+| 作者     | [kunkun0w0](https://github.com/kunkun0w0)、[ELKYang](https://github.com/ELKYang) |
+| 日期     | 2022年4月                                                    |
+| 框架版本 | PaddlePaddle==2.2.0                                          |
+| 应用场景 | 骨架动作识别                                                 |
+| 硬件支持 | GPU, CPU                                                     |
 
 代码参考：https://github.com/lshiwjx/2s-AGCN
 
