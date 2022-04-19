@@ -243,7 +243,7 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
 ```
 bash test_tipc/test_train_inference_python.sh test_tipc/configs/2s-AGCN/train_infer_python.txt 'lite_train_lite_infer'
 ```
-详细输出见`test_tipc`下的README.md文档
+详细输出见`test_tipc`下的[README.md](https://github.com/ELKYang/2s-AGCN-paddle/blob/main/test_tipc/README.md)文档
 
 ## 7 代码结构与详细说明
 ```
