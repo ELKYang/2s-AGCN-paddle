@@ -241,6 +241,9 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
 ## 6 TIPC
 运行下述命令，完成训推一体化脚本测试
 ```
+# 准备tipc数据
+bash test_tipc/prepare.sh ./test_tipc/configs/2s-AGCN/train_infer_python.txt 'lite_train_lite_infer'
+# 开启训推一体'lite_train_lite_infer'模式
 bash test_tipc/test_train_inference_python.sh test_tipc/configs/2s-AGCN/train_infer_python.txt 'lite_train_lite_infer'
 ```
 详细输出见`test_tipc`下的[README.md](https://github.com/ELKYang/2s-AGCN-paddle/blob/main/test_tipc/README.md)文档
