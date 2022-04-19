@@ -275,6 +275,7 @@ bash test_train_inference_python.sh configs/2s-AGCN/train_infer_python.txt 'lite
    |-- runs                         # VisualDL日志文件夹
    |-- work_dir                     # 模型训练日志文件夹
    |-- weights                      # 权重文件夹
+   |-- test_tipc                    # TIPC训推一体化认证
    |-- README.md
    |-- ensemble.py                  # 双流集成代码
    |-- export_model.py              # 导出静态模型
