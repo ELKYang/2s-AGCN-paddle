@@ -24,12 +24,12 @@ def get_args(add_help=True):
     parser.add_argument(
         '--save-dir',
         type=str,
-        default='../data/ntu/xview',
+        default='../data/ntu/tiny_dataset',
         help='save path of result data')
     parser.add_argument(
         '--data-num',
         type=int,
-        default=10,
+        default=50,
         help='data num of result data')
 
     args = parser.parse_args()
@@ -53,9 +53,10 @@ def gen_tiny_data(data_path, label_path, save_dir, data_num, use_mmap=True):
     data = data[0:data_num]
     sample_name = sample_name[0:data_num]
 
-    tiny_data = {'label': label, 'data': data, 'sample_name': sample_name}
-    with open(os.path.join(save_dir, "tiny_data.pkl"), "wb") as pk:
-        pickle.dump(tiny_data, pk)
+    with open(os.path.join(save_dir, "tiny_infer_label.pkl"), 'wb') as f:
+        pickle.dump((sample_name, list(label)), f)
+    np.save(os.path.join(save_dir, "tiny_infer_data"), data)
+    print("Successfully generate tiny dataset")
 
 
 if __name__ == "__main__":
