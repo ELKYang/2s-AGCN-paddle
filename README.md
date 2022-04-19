@@ -41,7 +41,7 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
      -nturgbd_raw\  
        -nturgb+d_skeletons\
     	  ...
-    	-samples_with_missing_skeletons.txt
+       -samples_with_missing_skeletons.txt
    ```
 
 2. 生成joint数据
@@ -91,6 +91,31 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
      ```
      python main.py --config config/nturgbd-cross-view/train_bone.yaml
      ```
+     
+     部分训练输出如下:
+     
+     ```
+     [ Tue Apr 19 00:57:05 2022 ] Training epoch: 1
+     100%|█████████████████████████████████████████| 588/588 [14:01<00:00,  1.43s/it]
+     [ Tue Apr 19 01:11:07 2022 ] 	Mean training loss: 2.5229.
+     [ Tue Apr 19 01:11:07 2022 ] 	Time consumption: [Data]01%, [Network]99%
+     [ Tue Apr 19 01:11:07 2022 ] Eval epoch: 1
+     100%|█████████████████████████████████████████| 296/296 [01:47<00:00,  2.97it/s]
+     Accuracy:  0.5453729135854638  model:  ./runs/ntu_cv_agcn_bone
+     [ Tue Apr 19 01:12:56 2022 ] 	Mean test loss of 296 batches: 1.4155468940734863.
+     [ Tue Apr 19 01:12:56 2022 ] 	Top1: 54.54%
+     [ Tue Apr 19 01:12:56 2022 ] 	Top5: 90.08%
+     [ Tue Apr 19 01:12:56 2022 ] Training epoch: 2
+     100%|█████████████████████████████████████████| 588/588 [14:03<00:00,  1.43s/it]
+     [ Tue Apr 19 01:27:01 2022 ] 	Mean training loss: 1.3931.
+     [ Tue Apr 19 01:27:01 2022 ] 	Time consumption: [Data]01%, [Network]99%
+     [ Tue Apr 19 01:27:01 2022 ] Eval epoch: 2
+     100%|█████████████████████████████████████████| 296/296 [01:47<00:00,  2.97it/s]
+     Accuracy:  0.6540249313331925  model:  ./runs/ntu_cv_agcn_bone
+     [ Tue Apr 19 01:28:50 2022 ] 	Mean test loss of 296 batches: 1.1467070579528809.
+     [ Tue Apr 19 01:28:50 2022 ] 	Top1: 65.40%
+     [ Tue Apr 19 01:28:50 2022 ] 	Top5: 92.53%
+     ```
 
    训练完成后模型的VisualDL日志保存在`runs`文件夹
 
@@ -108,6 +133,12 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
 
      ```
      python main.py --config config/nturgbd-cross-view/test_bone.yaml --weights 'path to weights'
+     ```
+     
+     测试输出如下
+     
+     ```
+     
      ```
 
 4. **模型预测**
@@ -131,7 +162,63 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
    [ Mon Apr 18 23:40:28 2022 ] Done.
    ```
 
-5. **双流融合生成结果**
+5. **模型动转静推理**
+
+   - 模型动转静
+   
+     ```
+     python export_model.py --save_dir ./output --model_path 'The path of model for export' --batch 10
+     ```
+   
+     > batch是在静态推理时使用的批大小，需要与infer阶段一致；
+     >
+     > 会在output文件夹生成静态模型：
+     >
+     >    |-- output
+     >       |-- model.pdipaprams
+     >       |-- model.pdipaprams.info
+     >       |-- model.pdmodel
+   
+   - 生成小数据集
+   
+     模型推理时使用小数据集进行模型推理
+   
+     ```
+     pyhton ./data_gen/gen_infer_sample_data.py --data_path '../data/ntu/xview/val_data_joint.npy' --label_path '../data/ntu/xview/val_label.pkl' --data_num 50
+     ```
+   
+   - 模型静态推理
+   
+     > 安装auto_log，需要进行安装，安装方式如下：
+     >
+     > ```
+     > git clone https://github.com/LDOUBLEV/AutoLog
+     > cd AutoLog/
+     > pip3 install -r requirements.txt
+     > python3 setup.py bdist_wheel
+     > pip3 install ./dist/auto_log-1.2.0-py3-none-any.whl
+     > ```
+   
+     进行模型的静态推理
+   
+     ```
+     pyhton infer.py --data_file 'path to tiny data set' --label_path 'path to tiny label set' --model_file ./output/model.pdmodel --params_file ./output/model.pdiparams
+     ```
+   
+     静态推理部分主要输出：
+   
+     ```
+     Batch action class Predict:  [0 1 2 3 4 5 6 7 8 9] Batch action class True:  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] Batch Accuracy:  1.0 Batch sample Name:  ['S001C001P001R001A001.skeleton', 'S001C001P001R001A002.skeleton', 'S001C001P001R001A003.skeleton', 'S001C001P001R001A004.skeleton', 'S001C001P001R001A005.skeleton', 'S001C001P001R001A006.skeleton', 'S001C001P001R001A007.skeleton', 'S001C001P001R001A008.skeleton', 'S001C001P001R001A009.skeleton', 'S001C001P001R001A010.skeleton']
+     Batch action class Predict:  [10 11 12 13 14 15 15 17 18 19] Batch action class True:  [10, 11, 12, 13, 14, 15, 16, 17, 18, 19] Batch Accuracy:  0.9 Batch sample Name:  ['S001C001P001R001A011.skeleton', 'S001C001P001R001A012.skeleton', 'S001C001P001R001A013.skeleton', 'S001C001P001R001A014.skeleton', 'S001C001P001R001A015.skeleton', 'S001C001P001R001A016.skeleton', 'S001C001P001R001A017.skeleton', 'S001C001P001R001A018.skeleton', 'S001C001P001R001A019.skeleton', 'S001C001P001R001A020.skeleton']
+     Batch action class Predict:  [20 21 22 23 24 25 26 27 28 29] Batch action class True:  [20, 21, 22, 23, 24, 25, 26, 27, 28, 29] Batch Accuracy:  1.0 Batch sample Name:  ['S001C001P001R001A021.skeleton', 'S001C001P001R001A022.skeleton', 'S001C001P001R001A023.skeleton', 'S001C001P001R001A024.skeleton', 'S001C001P001R001A025.skeleton', 'S001C001P001R001A026.skeleton', 'S001C001P001R001A027.skeleton', 'S001C001P001R001A028.skeleton', 'S001C001P001R001A029.skeleton', 'S001C001P001R001A030.skeleton']
+     Batch action class Predict:  [30 31 32 33 34 35 36 37 44 39] Batch action class True:  [30, 31, 32, 33, 34, 35, 36, 37, 38, 39] Batch Accuracy:  0.9 Batch sample Name:  ['S001C001P001R001A031.skeleton', 'S001C001P001R001A032.skeleton', 'S001C001P001R001A033.skeleton', 'S001C001P001R001A034.skeleton', 'S001C001P001R001A035.skeleton', 'S001C001P001R001A036.skeleton', 'S001C001P001R001A037.skeleton', 'S001C001P001R001A038.skeleton', 'S001C001P001R001A039.skeleton', 'S001C001P001R001A040.skeleton']
+     Batch action class Predict:  [40 41 42 43 44 45 46 47 48 49] Batch action class True:  [40, 41, 42, 43, 44, 45, 46, 47, 48, 49] Batch Accuracy:  1.0 Batch sample Name:  ['S001C001P001R001A041.skeleton', 'S001C001P001R001A042.skeleton', 'S001C001P001R001A043.skeleton', 'S001C001P001R001A044.skeleton', 'S001C001P001R001A045.skeleton', 'S001C001P001R001A046.skeleton', 'S001C001P001R001A047.skeleton', 'S001C001P001R001A048.skeleton', 'S001C001P001R001A049.skeleton', 'S001C001P001R001A050.skeleton']
+     Infer Mean Accuracy:  0.96
+     ```
+   
+6. **双流融合生成结果**
+
+   
 
    ```
    python ensemble.py --datasets ntu/view
@@ -159,7 +246,7 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
    |-- graph                        # 生成骨骼拓扑图
       |-- ntu_rgb_d.py              # 生成NTU-RGB-D骨骼拓扑图
       |-- tools.py
-   |-- output                       # 存放静态模型
+   |-- output                       # 存放静态模型以及AutoLog日志文件
       |-- model.pdipaprams
       |-- model.pdipaprams.info
       |-- model.pdmodel
