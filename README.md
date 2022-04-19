@@ -140,8 +140,41 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
 ## 6 TIPC
 
 
-
-## 7 附录
+## 7 代码结构与详细说明
+```
+|-- paddle_2s_AGCN
+   |-- config                       # 模型训练所需的yaml配置
+   |-- data_gen                     # 数据预处理文件
+      |-- __init__.py
+      |-- gen_bone_data.py          # 获取训练所需骨骼数据
+      |-- gen_infer_sample_data.py  # 生成推理数据
+      |-- gen_motion_data.py
+      |-- ntu_gendata.py            # NTU-RGB-D完整数据集预处理
+      |-- preprocess.py
+      |-- rotation.py
+   |-- feeders                      # 读取数据集内数据
+      |-- __init__.py
+      |-- feeder.py                 # 创建paddle.io.Dataset
+      |-- tools.py
+   |-- graph                        # 生成骨骼拓扑图
+      |-- ntu_rgb_d.py              # 生成NTU-RGB-D骨骼拓扑图
+      |-- tools.py
+   |-- output                       # 存放静态模型
+      |-- model.pdipaprams
+      |-- model.pdipaprams.info
+      |-- model.pdmodel
+   |-- paddle_model                 # paddle模型定义
+      |-- __init__.py
+      |-- agcn.py                   # AGCN模型
+   |-- runs                         # 模型训练日志文件夹
+   |-- weights                      # 权重文件夹
+   |-- README.md
+   |-- ensemble.py                  # 双流集成代码
+   |-- export_model.py              # 导出静态模型
+   |-- main.py                      # 单卡训练测试代码
+   |-- requirements.txt             # 环境配置文件
+```
+## 8 附录
 
 代码参考：https://github.com/lshiwjx/2s-AGCN
 
