@@ -40,16 +40,17 @@ def parse_args():
     parser.add_argument("--params_file", default='./output/model.pdiparams', type=str)
 
     # params for predict
-    parser.add_argument("-b", "--batch_size", type=int, default=10)
-    parser.add_argument("--use_gpu", type=str2bool, default=False)
+    parser.add_argument("-b", "--batch-size", type=int, default=10)
+    parser.add_argument("--use-gpu", type=str2bool, default=False)
     parser.add_argument("--precision", type=str, default="fp32")
     parser.add_argument("--ir_optim", type=str2bool, default=True)
     parser.add_argument("--use_tensorrt", type=str2bool, default=False)
     parser.add_argument("--gpu_mem", type=int, default=8000)
-    parser.add_argument("--enable_benchmark", type=str2bool, default=True)
+    parser.add_argument("--benchmark", type=str2bool, default=True)
     parser.add_argument("--enable_mkldnn", type=str2bool, default=False)
     parser.add_argument("--cpu_threads", type=int, default=None)
 
+    parser.add_argument("--model-dir", default='./output/model.pdiparams', type=str)    #
     return parser.parse_args()
 
 
@@ -123,7 +124,7 @@ def main():
     # get data
     data, sample_name, label = parse_file_paths(data_path=args.data_file, label_path=args.label_file)
 
-    if args.enable_benchmark:
+    if args.benchmark:
         num_warmup = 0
 
         # instantiate auto log
@@ -148,7 +149,7 @@ def main():
         ed_idx = min(st_idx + batch_num, data.shape[0])
 
         # auto log start
-        if args.enable_benchmark:
+        if args.benchmark:
             autolog.times.start()
 
         # Pre process batched input
@@ -156,7 +157,7 @@ def main():
         batch_label = label[st_idx:ed_idx]
         batch_sample_name = sample_name[st_idx:ed_idx]
 
-        if args.enable_benchmark:
+        if args.benchmark:
             autolog.times.stamp()
 
         # run inference
@@ -170,7 +171,7 @@ def main():
         predictor.run()
 
         # get inference process time cost
-        if args.enable_benchmark:
+        if args.benchmark:
             autolog.times.stamp()
 
         # get out data from output tensor
@@ -190,11 +191,11 @@ def main():
               'Batch sample Name: ', batch_sample_name)
 
         # get post process time cost
-        if args.enable_benchmark:
+        if args.benchmark:
             autolog.times.end(stamp=True)
     print('Infer Mean Accuracy: ', np.mean(np.array(acc)))
     # report benchmark log if enabled
-    if args.enable_benchmark:
+    if args.benchmark:
         autolog.report()
 
 
