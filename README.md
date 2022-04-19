@@ -239,6 +239,7 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
    ```
 
 ## 6 TIPC
+运行下述命令，完成训推一体化脚本测试
 ```
 cd test_tipc
 bash test_train_inference_python.sh configs/2s-AGCN/train_infer_python.txt 'lite_train_lite_infer'
