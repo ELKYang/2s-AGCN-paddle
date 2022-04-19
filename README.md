@@ -181,7 +181,7 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
    
    - 生成小数据集
    
-     模型推理时使用小数据集进行模型推理
+     模型推理时使用小数据集进行模型推理，以使用xsub的joint数据生成tiny dataset：
    
      ```
      pyhton ./data_gen/gen_infer_sample_data.py --dataset 'xsub' --mode 'joint' --data_num 50
