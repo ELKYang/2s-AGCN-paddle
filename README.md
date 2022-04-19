@@ -18,11 +18,11 @@ This is the unofficial code based on **PaddlePaddle** of CVPR 2019 paper:
 
 > 在NTU-RGBD数据集上的测试效果如下
 
-|                |    CS     |   CV   |
-| :------------: | :-------: | :----: |
-| Js-AGCN(joint) |   85.8%   | 94.13% |
-| Bs-AGCN(bone)  |   86.7%   |        |
-|    2s-AGCN     | **88.5%** |        |
+|                |    CS     |    CV     |
+| :------------: | :-------: | :-------: |
+| Js-AGCN(joint) |   85.8%   |  94.13%   |
+| Bs-AGCN(bone)  |   86.7%   |   93.9%   |
+|    2s-AGCN     | **88.5%** | **95.4%** |
 
 在NTU-RGBD上达到验收标准：X-Sub=88.5%, X-View=95.1%
 
@@ -138,7 +138,16 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
      测试输出如下
      
      ```
-     
+     [ Tue Apr 19 14:39:01 2022 ] Load weights from ./runs/ntu_cv_agcn_bone-49-29400.pdparams.
+     [ Tue Apr 19 14:39:01 2022 ] Model:   paddle_model.agcn.Model.
+     [ Tue Apr 19 14:39:01 2022 ] Weights: ./runs/ntu_cv_agcn_bone-49-29400.pdparams.
+     [ Tue Apr 19 14:39:01 2022 ] Eval epoch: 1
+     100%|███████████████████████████████████████████| 74/74 [01:52<00:00,  1.44s/it]
+     Accuracy:  0.9387280794422143  model:  ./runs/ntu_cv_agcn_test_bone
+     [ Tue Apr 19 14:40:55 2022 ] 	Mean test loss of 74 batches: 0.23004150390625.
+     [ Tue Apr 19 14:40:55 2022 ] 	Top1: 93.87%
+     [ Tue Apr 19 14:40:55 2022 ] 	Top5: 99.09%
+     [ Tue Apr 19 14:40:55 2022 ] Done.
      ```
 
 4. **模型预测**
@@ -218,10 +227,15 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
    
 6. **双流融合生成结果**
 
-   
-
    ```
    python ensemble.py --datasets ntu/view
+   ```
+   
+   双流融合输出如下所示：
+   
+   ```
+   100%|██████████████████████████████████| 18932/18932 [00:00<00:00, 54076.63it/s]
+   acc:  0.954  acc5:  0.993
    ```
 
 ## 6 TIPC
@@ -254,6 +268,7 @@ VisualDL可视化日志：[VDL](https://github.com/ELKYang/2s-AGCN-paddle/tree/m
       |-- __init__.py
       |-- agcn.py                   # AGCN模型
    |-- runs                         # 模型训练日志文件夹
+   |-- work_dir						# 模型训练日志文件夹
    |-- weights                      # 权重文件夹
    |-- README.md
    |-- ensemble.py                  # 双流集成代码
