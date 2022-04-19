@@ -12,9 +12,13 @@
 
 ```shell
 test_tipc/
-├── configs/  # 配置文件目录
-    ├── 2s-AGCN   # 2sAGCN模型的测试配置文件目录 
-        ├── train_infer_python.txt      # 测试Linux上python训练预测（基础训练预测）的配置文件
+├── configs/                        # 配置文件目录
+    ├── 2s-AGCN                     # 2s-AGCN 模型的测试配置文件目录 
+        ├── train_infer_python.txt  # 测试Linux上python训练预测（基础训练预测）的配置文件
+        ├── train_infer_python.md   # 测试Linux上python训练预测（基础训练预测）的使用文档
+├── results/  # 结果
+├── output/   # 测试结果日志
+├── prepare.sh                        # 完成test_*.sh运行所需要的数据和模型下载
 ├── test_train_inference_python.sh    # 测试python训练预测的主程序
 └── readme.md                         # 使用文档
 ```
