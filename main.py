@@ -156,12 +156,16 @@ def get_parser():
     parser.add_argument('--only_train_part', default=False)
     parser.add_argument('--only_train_epoch', default=0)
     parser.add_argument('--warm_up_epoch', default=0)
-    parser.add_argument('--lite', default=True)
+
+    # tipc
+    parser.add_argument('--epochs', default=50, type=int)
+    parser.add_argument('--output-dir', default="./output/")    #
+    parser.add_argument('--pretrained', default=".")            #
     return parser
 
 
 class Processor():
-    """ 
+    """
         Processor for Skeleton-based Action Recgnition
     """
 
@@ -215,13 +219,13 @@ class Processor():
         paddle.device.set_device(self.output_device)
         Model = import_class(self.arg.model)
         shutil.copy2(inspect.getfile(Model), self.arg.work_dir)
-        print(Model)
+        # print(Model)
         self.model = Model(**self.arg.model_args)
-        print(self.model)
+        # print(self.model)
         self.loss = nn.CrossEntropyLoss()
 
         if self.arg.weights:
-            self.global_step = int(arg.weights[:-9].split('-')[-1])
+            # self.global_step = int(arg.weights[:-9].split('-')[-1])
             self.print_log('Load weights from {}.'.format(self.arg.weights))
             if '.pkl' in self.arg.weights:
                 with open(self.arg.weights, 'r') as f:
@@ -399,10 +403,12 @@ class Processor():
                     predict_label = paddle.argmax(output, 1)
                     step += 1
 
+                """
                 if arg.train_feeder_args['debug']:
                     predict = list(predict_label.numpy())
                     true = list(label.numpy())
                     print('predict action index: ', predict, '\n', 'true action index: ', true)
+                """
                 if wrong_file is not None or result_file is not None:
                     predict = list(predict_label.numpy())
                     true = list(label.numpy())
@@ -417,7 +423,7 @@ class Processor():
             if accuracy > self.best_acc:
                 self.best_acc = accuracy
                 state_dict = self.model.state_dict()
-                paddle.save(state_dict, path='./weights/best_model.pdparams')
+                paddle.save(state_dict, path='./runs/best_model.pdparams')
 
             # self.lr_scheduler.step(loss)
             print('Accuracy: ', accuracy, ' model: ', self.arg.model_saved_name)
@@ -507,7 +513,9 @@ if __name__ == '__main__':
 
     arg = parser.parse_args()
     init_seed(0)
-    
-    arg.train_feeder_args['debug'] = arg.lite
+
+    arg.num_epoch = arg.epochs
+    arg.train_feeder_args['debug'] = True
+    arg.test_feeder_args['debug'] = True
     processor = Processor(arg)
     processor.start()
