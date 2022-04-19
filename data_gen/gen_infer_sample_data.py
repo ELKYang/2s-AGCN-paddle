@@ -53,7 +53,7 @@ def gen_tiny_data(data_path, label_path, save_dir, data_num, use_mmap=True):
     data = data[0:data_num]
     sample_name = sample_name[0:data_num]
 
-    with open(os.path.join(save_dir, "tiny_infer_label.pkl"), 'wb') as f:
+    with open(os.path.join(save_dir, "tiny_infer_label.pkl"), 'wb') as f:  # 生成小数据
         pickle.dump((sample_name, list(label)), f)
     np.save(os.path.join(save_dir, "tiny_infer_data"), data)
     print("Successfully generate tiny dataset")
