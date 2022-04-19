@@ -1,18 +1,32 @@
 ===========================train_params===========================
-model_name:2s-AGCN-CS-Joint
+model_name:2s-AGCN
 python:python
-main:main.py
-ensemble:null
-config_train:./config/nturgbd-cross-subject/train_joint.yaml
-============================eval_params===========================
-config_test:./config/nturgbd-cross-subject/test_joint.yaml
-weights:./weights/best_model.pdparams
+gpu_list:0
+use-gpu:True
+--epochs:lite_train_lite_infer=1
+--output-dir:./output/
+--batch-size:lite_train_lite_infer=16
+--pretrained:null
+train_model_name:latest.pdparams
+--data-path:./lite_data
+##
+trainer:norm_train
+norm_train:main.py --config ./config/nturgbd-cross-view/train_joint.yaml
+##
+===========================eval_params===========================
+eval:main.py --config ./config/nturgbd-cross-view/test_joint.yaml --weights=./runs/best_model.pdparams
+##
 ===========================infer_params===========================
-prepare_data:data_gen/gen_infer_sample_data.py
-dataset:xsub
-stream:bone
-data_num:50
-export_tool:export_model.py
-model_path:./weights/best_model.pdparams
-export_batch_size:10
-infer_tool:infer.py
+--save-inference-dir:null
+--pretrained:null
+norm_export:export_model.py --model_path=./runs/best_model.pdparams
+##
+train_model:./pretrain_models/mobilenet_v3_small_pretrained.pdparams
+infer_export:export_model.py --model=mobilenet_v3_small
+##
+inference:infer.py
+--use-gpu:True|False
+--batch-size:1
+--model-dir:./output/mobilenet_v3_small_infer/
+--img-path:./images/demo.jpg
+--benchmark:True
