@@ -20,7 +20,7 @@ class Feeder(Dataset):
         :param random_move: 
         :param window_size: The length of the output sequence
         :param normalization: If true, normalize input sequence
-        :param debug: If true, only use the first 100 samples
+        :param debug: If true, only use the first 400 samples
         :param use_mmap: If true, use mmap mode to load data, which can save the running memory
         """
 
@@ -55,9 +55,9 @@ class Feeder(Dataset):
         else:
             self.data = np.load(self.data_path)
         if self.debug:
-            self.label = self.label[0:10]
-            self.data = self.data[0:10]
-            self.sample_name = self.sample_name[0:10]
+            self.label = self.label[0:400]
+            self.data = self.data[0:400]
+            self.sample_name = self.sample_name[0:400]
 
     def get_mean_map(self):
         data = self.data
