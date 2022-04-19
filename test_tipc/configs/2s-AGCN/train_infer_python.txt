@@ -19,14 +19,14 @@ eval:main.py --config ./config/nturgbd-cross-view/test_joint.yaml --weights=./ru
 ===========================infer_params===========================
 --save-inference-dir:null
 --pretrained:null
-norm_export:export_model.py --model_path=./runs/best_model.pdparams
+norm_export:export_model.py --model_path=./runs/best_model.pdparams --batch=10
 ##
-train_model:./pretrain_models/mobilenet_v3_small_pretrained.pdparams
-infer_export:export_model.py --model=mobilenet_v3_small
+train_model:null
+infer_export:export_model.py --model=null
 ##
 inference:infer.py
 --use-gpu:True|False
---batch-size:1
---model-dir:./output/mobilenet_v3_small_infer/
---img-path:./images/demo.jpg
+--batch-size:10
+--model-dir:null
+--img-path:null
 --benchmark:True
