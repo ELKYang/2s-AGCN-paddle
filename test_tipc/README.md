@@ -50,14 +50,21 @@ bash test_tipc/test_train_inference_python.sh ./test_tipc/configs/2s-AGCN/train_
 ```
 ## 3.TIPC测试成功图片
 
-tiny数据集生成成功：
+**tiny数据集生成成功：**
 ![tiny数据集生成成功](https://github.com/ELKYang/2s-AGCN-paddle/blob/main/test_tipc/imgs/4.png)
 
-训练指令执行成功：
+
+**训练指令执行成功：**
 ![训练指令执行成功](https://github.com/ELKYang/2s-AGCN-paddle/blob/main/test_tipc/imgs/1.png)
 
-导出指令执行成功：
+
+**导出指令执行成功：**
 ![导出指令执行成功](https://github.com/ELKYang/2s-AGCN-paddle/blob/main/test_tipc/imgs/2.png)
 
-推理指令执行成功：
+
+**推理指令执行成功：**
+**GPU**
 ![推理指令执行成功](https://github.com/ELKYang/2s-AGCN-paddle/blob/main/test_tipc/imgs/3.png)
+
+**CPU**
+![推理指令执行成功](https://github.com/ELKYang/2s-AGCN-paddle/blob/main/test_tipc/imgs/5.png)
