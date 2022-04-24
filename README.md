@@ -293,6 +293,7 @@ bash test_tipc/test_train_inference_python.sh test_tipc/configs/2s-AGCN/train_in
 | 框架版本 | PaddlePaddle==2.2.0                                          |
 | 应用场景 | 骨架动作识别                                                 |
 | 硬件支持 | GPU, CPU                                                     |
+| AIStudio地址 | [Notebook](https://aistudio.baidu.com/aistudio/projectdetail/3821064?contributionType=1&shared=1) |
 
 代码参考：https://github.com/lshiwjx/2s-AGCN
 
